@@ -445,6 +445,7 @@
   };
 
   var current = 'es';
+  try{ var saved = localStorage.getItem('toc-lang'); if(saved==='en'||saved==='es'){ current = saved; } }catch(e){}
   var toggle = document.getElementById('langToggle');
   var htmlRoot = document.documentElement;
 
@@ -461,6 +462,7 @@
 
   toggle.addEventListener('click', function(){
     current = current === 'es' ? 'en' : 'es';
+    try{ localStorage.setItem('toc-lang', current); }catch(e){}
     render(current);
   });
 
