@@ -79,13 +79,14 @@
 
   /* ---------- nav ---------- */
   .nav{
-    position:sticky;
+    position:relative;
     top:0;
     z-index:20;
     background:color-mix(in srgb, var(--bg) 88%, transparent);
     backdrop-filter:blur(10px);
     border-bottom:1px solid var(--surface-line);
   }
+  @media (min-width:900px){ .nav{position:sticky;} }
   .nav-inner{
     display:flex;
     align-items:center;
