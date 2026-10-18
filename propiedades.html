@@ -292,11 +292,24 @@
   .property-cta{font-family:var(--font-label);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;}
   .property-photo ~ .property-top .property-index,.property-photo ~ .property-top .property-cta,.property-photo ~ .property-foot .property-name{color:#F5F1EA;}
   .property-photo ~ .property-foot .property-tag{color:#E6CFA3;}
-  a.property{text-decoration:none;color:inherit;cursor:pointer;}
-  a.property .property-photo{transition:transform .6s ease;}
-  a.property:hover .property-photo{transform:scale(1.03);}
-  a.property:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
-  @media (prefers-reduced-motion: reduce){ a.property .property-photo{transition:none;} a.property:hover .property-photo{transform:none;} }
+  .property{color:inherit;}
+  .property .property-photo{transition:transform .6s ease;}
+  .property:hover .property-photo{transform:scale(1.03);}
+  .property-link{position:absolute;inset:0;z-index:1;cursor:pointer;}
+  .property-link:focus-visible{outline:2px solid var(--accent);outline-offset:-6px;}
+  .property-top,.property-foot{pointer-events:none;}
+  .property-avail{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .property-avail .property-tag{flex:1;min-width:0;}
+  .property-notify{
+    flex:none;pointer-events:auto;
+    font-family:var(--font-label);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    text-decoration:none;background:var(--accent);color:#1A1410;
+    padding:8px 12px;border-radius:2px;transition:transform .15s ease;
+  }
+  .property-notify:hover{transform:translateY(-1px);}
+  .property-notify:focus-visible{outline:2px solid #F5F1EA;outline-offset:2px;}
+  .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  @media (prefers-reduced-motion: reduce){ .property .property-photo{transition:none;} .property:hover .property-photo{transform:none;} .property-notify{transition:none;} }
 
   /* ---------- contact ---------- */
   .contact{background:var(--fg);color:var(--bg);}
@@ -398,22 +411,30 @@
       <h2 class="section-title" data-i18n="collection.title">La colección, una por una</h2>
     </div>
     <div class="collection-grid" data-reveal>
-      <a class="property" href="propiedad-3003.html" aria-label="3003">
+      <div class="property">
         <div class="property-bg property-photo"><img src="assets/img/cover-3003-840.webp" srcset="assets/img/cover-3003-480.webp 480w, assets/img/cover-3003-840.webp 840w" sizes="(min-width:620px) 440px, 100vw" width="840" height="1050" alt="3003" fetchpriority="high" decoding="async"></div>
+        <a class="property-link" href="propiedad-3003.html" aria-label="3003"></a>
         <div class="property-top"><span class="property-index">001</span><span class="property-cta" data-i18n="collection.view">Ver fotos →</span></div>
         <div class="property-foot">
           <span class="property-name">3003</span>
-          <span class="property-tag" data-i18n="collection.avail1">Disponible a partir del 1 de enero</span>
+          <div class="property-avail">
+            <span class="property-tag" data-i18n="collection.avail1">Disponible a partir del 1 de enero</span>
+            <a class="property-notify" href="https://ig.me/m/theothercollectionmx" target="_blank" rel="noopener"><span data-i18n="collection.notify">Avísame</span><span class="vh"> 3003</span></a>
+          </div>
         </div>
-      </a>
-      <a class="property" href="propiedad-2417.html" aria-label="2417">
+      </div>
+      <div class="property">
         <div class="property-bg property-photo"><img src="assets/img/cover-2417-840.webp" srcset="assets/img/cover-2417-480.webp 480w, assets/img/cover-2417-840.webp 840w" sizes="(min-width:620px) 440px, 100vw" width="840" height="1050" alt="2417" loading="lazy" decoding="async"></div>
+        <a class="property-link" href="propiedad-2417.html" aria-label="2417"></a>
         <div class="property-top"><span class="property-index">002</span><span class="property-cta" data-i18n="collection.view">Ver fotos →</span></div>
         <div class="property-foot">
           <span class="property-name">2417</span>
-          <span class="property-tag" data-i18n="collection.avail2">No disponible por el momento</span>
+          <div class="property-avail">
+            <span class="property-tag" data-i18n="collection.avail2">No disponible por el momento</span>
+            <a class="property-notify" href="https://ig.me/m/theothercollectionmx" target="_blank" rel="noopener"><span data-i18n="collection.notify">Avísame</span><span class="vh"> 2417</span></a>
+          </div>
         </div>
-      </a>
+      </div>
     </div>
   </div>
 </section>
@@ -452,6 +473,7 @@
       'collection.view':'Ver fotos →',
       'collection.avail1':'Disponible a partir del 1 de enero',
       'collection.avail2':'No disponible por el momento',
+      'collection.notify':'Avísame',
       'contact.copy1':'Si quieres que tu propiedad sea parte de The Other Collection, contáctanos por Instagram.',
       'footer.loc':'Guadalajara, México',
       'footer.copy':'© 2026 The Other Collection'
@@ -464,6 +486,7 @@
       'collection.view':'View photos →',
       'collection.avail1':'Available from January 1',
       'collection.avail2':'Not available at the moment',
+      'collection.notify':'Notify me',
       'contact.copy1':'If you’d like your property to be part of The Other Collection, reach us on Instagram.',
       'footer.loc':'Guadalajara, Mexico',
       'footer.copy':'© 2026 The Other Collection'
