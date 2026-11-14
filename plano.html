@@ -447,15 +447,15 @@
       <h1 class="section-title" data-i18n="plan.title">Plano</h1>
       <p class="plan-sub" data-i18n="plan.sub">Studio · 42.3 m² · Torre Vitant</p>
     </div>
-    <figure class="plan" data-reveal>
-      <svg viewBox="40 120 1190 1920" role="img" aria-labelledby="planAlt" xmlns="http://www.w3.org/2000/svg">
-        <title id="planAlt" data-i18n="plan.alt">Plano del departamento</title>
+    <figure class="plan" data-plan="2417" data-reveal>
+      <svg viewBox="40 120 1190 1920" role="img" aria-labelledby="planAlt2417" xmlns="http://www.w3.org/2000/svg">
+        <title id="planAlt2417" data-i18n="plan.alt">Plano del departamento</title>
         <defs>
-          <mask id="planMask" maskUnits="userSpaceOnUse" x="40" y="120" width="1190" height="1920">
+          <mask id="planMask2417" maskUnits="userSpaceOnUse" x="40" y="120" width="1190" height="1920">
             <image href="assets/img/plano-mask.webp" x="40" y="120" width="1190" height="1920"/>
           </mask>
         </defs>
-        <rect class="plan-lines" x="40" y="120" width="1190" height="1920" mask="url(#planMask)"/>
+        <rect class="plan-lines" x="40" y="120" width="1190" height="1920" mask="url(#planMask2417)"/>
         <text class="win" x="645" y="181" data-i18n="plan.windows">Ventanas de piso a techo</text>
         <text class="lg" x="615" y="655" data-i18n="plan.living">Sala comedor</text>
         <text class="lg" x="800" y="1315" data-i18n="plan.bedroom">Recámara</text>
@@ -465,6 +465,26 @@
         <text class="sm" x="525" y="1649" data-i18n="plan.laundry1">Área de</text>
         <text class="sm" x="525" y="1681" data-i18n="plan.laundry2">lavado</text>
         <text class="sm" x="205" y="2008" data-i18n="plan.entrance">Entrada</text>
+      </svg>
+    </figure>
+    <figure class="plan" data-plan="3003" data-reveal hidden>
+      <svg viewBox="40 120 1190 1920" role="img" aria-labelledby="planAlt3003" xmlns="http://www.w3.org/2000/svg">
+        <title id="planAlt3003" data-i18n="plan.alt">Plano del departamento</title>
+        <defs>
+          <mask id="planMask3003" maskUnits="userSpaceOnUse" x="40" y="120" width="1190" height="1920">
+            <image href="assets/img/plano-mask-3003.webp" x="40" y="120" width="1190" height="1920"/>
+          </mask>
+        </defs>
+        <rect class="plan-lines" x="40" y="120" width="1190" height="1920" mask="url(#planMask3003)"/>
+        <text class="win" x="645" y="181" data-i18n="plan.windows">Ventanas de piso a techo</text>
+        <text class="lg" x="604" y="655" data-i18n="plan.living">Sala comedor</text>
+        <text class="lg" x="770" y="1290" data-i18n="plan.bedroom">Recámara</text>
+        <text class="lg" x="231" y="1193" data-i18n="plan.kitchen">Cocina</text>
+        <text class="sm" x="1054" y="1220" transform="rotate(90 1054 1220)" data-i18n="plan.closet">Closet</text>
+        <text class="sm" x="752" y="1714" data-i18n="plan.bath">Baño</text>
+        <text class="sm" x="505" y="1612" data-i18n="plan.laundry1">Área de</text>
+        <text class="sm" x="505" y="1644" data-i18n="plan.laundry2">lavado</text>
+        <text class="sm" x="189" y="1946" data-i18n="plan.entrance">Entrada</text>
       </svg>
     </figure>
   </div>
@@ -508,6 +528,7 @@
   var back = document.getElementById('backLink');
   var p = (new URLSearchParams(location.search)).get('p');
   var fromProp = (p==='2417'||p==='3003');
+  document.querySelectorAll('figure.plan').forEach(function(f){ f.hidden = (f.getAttribute('data-plan') !== (fromProp ? p : '2417')); });
   if(fromProp){ back.setAttribute('href','propiedad-'+p+'.html'); back.setAttribute('data-i18n','plan.back'); }
 
   function render(lang){
