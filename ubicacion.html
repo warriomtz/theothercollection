@@ -428,19 +428,25 @@
   .map-page{padding-block:clamp(32px,6vw,64px) clamp(48px,8vw,96px);}
   .map-page .section-head{margin-bottom:32px;}
   .map-wrap{position:relative;height:clamp(420px,68vh,640px);border:1px solid var(--surface-line);border-radius:6px;overflow:hidden;background:var(--surface);}
-  #locMap{position:absolute;inset:0;font-family:var(--font-label);background:var(--surface);}
-  .map-wrap .leaflet-tile-pane{filter:saturate(.7) sepia(.14);}
-  :root[data-theme="dark"] .map-wrap .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) saturate(.5) brightness(.82) contrast(.92) sepia(.18);}
-  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .map-wrap .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) saturate(.5) brightness(.82) contrast(.92) sepia(.18);} }
-  .map-pin{display:block;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--accent),0 4px 12px rgba(0,0,0,.35);}
-  .map-wrap .leaflet-popup-content-wrapper{background:var(--surface);color:var(--fg);border-radius:4px;box-shadow:0 6px 20px rgba(0,0,0,.25);}
-  .map-wrap .leaflet-popup-tip{background:var(--surface);}
-  .map-wrap .leaflet-popup-content{margin:12px 16px;font-size:12px;letter-spacing:.08em;line-height:1.6;text-transform:uppercase;}
-  .map-wrap .leaflet-popup-content strong{color:var(--accent);font-weight:500;letter-spacing:.16em;}
-  .map-wrap .leaflet-bar a{background:var(--surface);color:var(--fg);border-color:var(--surface-line);}
-  .map-wrap .leaflet-bar a:hover{background:var(--accent-soft);color:var(--fg);}
-  .map-wrap .leaflet-control-attribution{background:color-mix(in srgb,var(--bg) 82%,transparent);color:var(--fg-muted);font-size:10px;}
-  .map-wrap .leaflet-control-attribution a{color:var(--accent);}
+  #locMap{position:absolute;inset:0;font-family:var(--font-label);background:var(--bg);}
+  .map-pin{display:block;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--accent),0 4px 12px rgba(0,0,0,.35);cursor:pointer;}
+  .map-wrap .maplibregl-canvas{outline:none;}
+  .map-wrap .maplibregl-popup-content{background:var(--surface);color:var(--fg);border-radius:4px;box-shadow:0 6px 20px rgba(0,0,0,.25);padding:12px 16px;font-family:var(--font-label);font-size:12px;letter-spacing:.08em;line-height:1.6;text-transform:uppercase;}
+  .map-wrap .maplibregl-popup-content strong{color:var(--accent);font-weight:500;letter-spacing:.16em;}
+  .map-wrap .maplibregl-popup-anchor-bottom .maplibregl-popup-tip{border-top-color:var(--surface);}
+  .map-wrap .maplibregl-popup-anchor-top .maplibregl-popup-tip{border-bottom-color:var(--surface);}
+  .map-wrap .maplibregl-popup-anchor-left .maplibregl-popup-tip{border-right-color:var(--surface);}
+  .map-wrap .maplibregl-popup-anchor-right .maplibregl-popup-tip{border-left-color:var(--surface);}
+  .map-wrap .maplibregl-ctrl-group{background:var(--surface);border:1px solid var(--surface-line);box-shadow:none;border-radius:4px;}
+  .map-wrap .maplibregl-ctrl-group button{background:transparent;border-color:var(--surface-line);}
+  .map-wrap .maplibregl-ctrl-group button:hover{background:var(--accent-soft);}
+  .map-wrap .maplibregl-ctrl-icon{filter:none;}
+  :root[data-theme="dark"] .map-wrap .maplibregl-ctrl-icon{filter:invert(1);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .map-wrap .maplibregl-ctrl-icon{filter:invert(1);} }
+  .map-wrap .maplibregl-ctrl-attrib{background:color-mix(in srgb,var(--bg) 82%,transparent);color:var(--fg-muted);font-family:var(--font-label);font-size:10px;}
+  .map-wrap .maplibregl-ctrl-attrib a{color:var(--accent);}
+  .map-fail{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;background:var(--surface);color:var(--fg-muted);font-family:var(--font-label);font-size:12px;letter-spacing:.14em;text-transform:uppercase;}
+  .map-wrap.is-failed .map-fail{display:flex;}
   .map-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:900;display:none;pointer-events:none;
     font-family:var(--font-label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);
     background:color-mix(in srgb,var(--bg) 88%,transparent);border:1px solid var(--surface-line);border-radius:999px;padding:8px 16px;white-space:nowrap;}
@@ -476,6 +482,7 @@
     </div>
     <div class="map-wrap" data-reveal>
       <div id="locMap" role="region" aria-label="Mapa"></div>
+      <div class="map-fail" data-i18n="loc.fail">El mapa no se pudo cargar. Usa el botón de abajo.</div>
       <div class="map-hint" data-i18n="loc.hint">Toca para explorar el mapa</div>
     </div>
     <p class="map-addr" data-i18n="loc.addr">Av. de las Américas 1254<br>Country Club, Guadalajara</p>
@@ -503,13 +510,13 @@
     es: {
       'page.title':'Ubicación — The Other Collection',
       'nav.back':'← Volver a propiedades','loc.back':'← Volver a la propiedad',
-      'loc.label':'Ubicación','loc.title':'Country Club, Guadalajara','loc.addr':'Av. de las Américas 1254<br>Country Club, Guadalajara','loc.open':'Abrir en Google Maps','loc.hint':'Toca para explorar el mapa',
+      'loc.label':'Ubicación','loc.title':'Country Club, Guadalajara','loc.addr':'Av. de las Américas 1254<br>Country Club, Guadalajara','loc.open':'Abrir en Google Maps','loc.hint':'Toca para explorar el mapa','loc.fail':'El mapa no se pudo cargar. Usa el botón de abajo.',
       'footer.copy':'© 2026 The Other Collection'
     },
     en: {
       'page.title':'Location — The Other Collection',
       'nav.back':'← Back to properties','loc.back':'← Back to the property',
-      'loc.label':'Location','loc.title':'Country Club, Guadalajara','loc.addr':'Av. de las Américas 1254<br>Country Club, Guadalajara','loc.open':'Open in Google Maps','loc.hint':'Tap to explore the map',
+      'loc.label':'Location','loc.title':'Country Club, Guadalajara','loc.addr':'Av. de las Américas 1254<br>Country Club, Guadalajara','loc.open':'Open in Google Maps','loc.hint':'Tap to explore the map','loc.fail':'The map could not load. Use the button below.',
       'footer.copy':'© 2026 The Other Collection'
     }
   };
@@ -546,26 +553,51 @@
   }
 })();
 </script>
-<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
-<script src="assets/vendor/leaflet/leaflet.js"></script>
+<link rel="stylesheet" href="assets/vendor/maplibre/maplibre-gl.css">
+<script src="assets/vendor/maplibre/maplibre-gl.js"></script>
 <script>
-/* Mapa interactivo (Leaflet + OpenStreetMap) */
+/* Mapa interactivo (MapLibre GL + OpenFreeMap, estilo propio con la paleta del sitio) */
 (function(){
   var el = document.getElementById('locMap'), wrap = el.parentNode;
   var LAT = 20.6975, LNG = -103.37306;
   function lang(){ return (document.documentElement.getAttribute('lang')||'es').toLowerCase().indexOf('en')===0 ? 'en' : 'es'; }
   function popupHtml(){ return '<strong>'+(lang()==='en'?'Vitant Tower':'Torre Vitant')+'</strong><br>Av. de las Américas 1254<br>Country Club'; }
-  var touch = L.Browser.mobile;
-  var map = L.map(el,{center:[LAT,LNG],zoom:16,minZoom:11,maxZoom:19,scrollWheelZoom:false,dragging:!touch});
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}).addTo(map);
-  var icon = L.divIcon({className:'map-pin-wrap',html:'<span class="map-pin"></span>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
-  var marker = L.marker([LAT,LNG],{icon:icon,title:'Torre Vitant'}).addTo(map).bindPopup(popupHtml,{closeButton:false,offset:[0,-4]});
-  marker.openPopup();
+  function fail(){ wrap.classList.add('is-failed'); }
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function isDark(){
+    var t = document.documentElement.getAttribute('data-theme');
+    if(t==='dark') return true; if(t==='light') return false;
+    return !!(mq && mq.matches);
+  }
+  function styleUrl(){ return 'assets/map-style-'+(isDark()?'dark':'light')+'.json'; }
+  var touch = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+  var map;
+  try{
+    map = new maplibregl.Map({container:el,style:styleUrl(),center:[LNG,LAT],zoom:16,minZoom:11,maxZoom:19,
+      attributionControl:false,dragPan:!touch,scrollZoom:false,dragRotate:false,pitchWithRotate:false,touchPitch:false});
+  }catch(e){ fail(); return; }
+  map.touchZoomRotate.disableRotation();
+  map.addControl(new maplibregl.AttributionControl({compact:true,customAttribution:'<a href="https://openfreemap.org" target="_blank" rel="noopener">OpenFreeMap</a> <a href="https://www.openmaptiles.org/" target="_blank" rel="noopener">&copy; OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}),'bottom-right');
+  map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
+  var loaded = false;
+  map.on('load', function(){ loaded = true; wrap.classList.remove('is-failed'); });
+  /* Si el estilo no carga en 12 s (sin WebGL, sin red), se muestra el aviso y el botón de Google Maps */
+  setTimeout(function(){ if(!loaded){ fail(); } }, 12000);
+  var pin = document.createElement('span'); pin.className = 'map-pin';
+  var popup = new maplibregl.Popup({closeButton:false,offset:18,maxWidth:'260px'}).setHTML(popupHtml());
+  var marker = new maplibregl.Marker({element:pin,anchor:'center'}).setLngLat([LNG,LAT]).setPopup(popup).addTo(map);
+  marker.togglePopup();
   if(touch){ wrap.classList.add('is-touch'); }
   /* La rueda del mouse y el arrastre con un dedo se activan al tocar el mapa, para no atrapar el scroll de la página */
-  map.once('click', function(){ map.scrollWheelZoom.enable(); map.dragging.enable(); wrap.classList.add('map-active'); });
-  new MutationObserver(function(){ var p = marker.getPopup(); if(p && p.isOpen()){ p.update(); } })
+  map.once('click', function(){ map.scrollZoom.enable(); map.dragPan.enable(); wrap.classList.add('map-active'); });
+  /* Idioma: actualiza el texto del globo */
+  new MutationObserver(function(){ popup.setHTML(popupHtml()); })
     .observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  /* Tema claro/oscuro: cambia el estilo del mapa */
+  var cur = isDark();
+  function retheme(){ var d = isDark(); if(d!==cur){ cur = d; map.setStyle(styleUrl()); } }
+  new MutationObserver(retheme).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  if(mq){ (mq.addEventListener ? mq.addEventListener('change',retheme) : mq.addListener(retheme)); }
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "1c9797e74aa94827925dc1aa9a0234e4"}'></script><!-- End Cloudflare Web Analytics -->
