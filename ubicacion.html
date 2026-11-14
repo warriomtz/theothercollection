@@ -486,7 +486,7 @@
       <div class="map-hint" data-i18n="loc.hint">Toca para explorar el mapa</div>
     </div>
     <p class="map-addr" data-i18n="loc.addr">Av. de las Américas 1254<br>Country Club, Guadalajara</p>
-    <div class="map-cta"><a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=20.6975,-103.37306" target="_blank" rel="noopener" data-i18n="loc.open">Abrir en Google Maps</a></div>
+    <div class="map-cta"><a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=20.69823,-103.37250" target="_blank" rel="noopener" data-i18n="loc.open">Abrir en Google Maps</a></div>
   </div>
 </main>
 
@@ -559,7 +559,7 @@
 /* Mapa interactivo (MapLibre GL + OpenFreeMap, estilo propio con la paleta del sitio) */
 (function(){
   var el = document.getElementById('locMap'), wrap = el.parentNode;
-  var LAT = 20.6975, LNG = -103.37306;
+  var LAT = 20.69823, LNG = -103.37250;
   function lang(){ return (document.documentElement.getAttribute('lang')||'es').toLowerCase().indexOf('en')===0 ? 'en' : 'es'; }
   function popupHtml(){ return '<strong>'+(lang()==='en'?'Vitant Tower':'Torre Vitant')+'</strong><br>Av. de las Américas 1254<br>Country Club'; }
   function fail(){ wrap.classList.add('is-failed'); }
