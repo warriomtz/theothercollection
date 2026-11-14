@@ -417,6 +417,11 @@
   @media(max-width:620px){ .lb-prev,.lb-next{top:auto;bottom:10px;transform:none;} .lb-prev{left:14px;} .lb-next{right:14px;} }
   .plan-page{padding-block:clamp(32px,6vw,64px) clamp(48px,8vw,96px);}
   .plan-page .section-head{margin-bottom:32px;}
+  .plan .cmp-ring{fill:none;stroke:var(--plan-line);stroke-width:2;opacity:var(--plan-line-opacity);}
+  .plan .cmp-n{fill:var(--plan-win);}
+  .plan .cmp-s{fill:none;stroke:var(--plan-line);stroke-width:2;opacity:var(--plan-line-opacity);}
+  .plan .cmp-l{font-size:25px;letter-spacing:0;}
+  .plan .cmp-t{font-size:25px;letter-spacing:.16em;text-anchor:end;fill:var(--plan-label-soft);}
   .plan-page .plan{width:min(100%,720px);}
   .plan-sub{font-family:var(--font-label);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-muted);margin:14px 0 0;}
 </style>
@@ -465,6 +470,15 @@
         <text class="sm" x="525" y="1649" data-i18n="plan.laundry1">Área de</text>
         <text class="sm" x="525" y="1681" data-i18n="plan.laundry2">lavado</text>
         <text class="sm" x="205" y="2008" data-i18n="plan.entrance">Entrada</text>
+        <g class="cmp" aria-hidden="true">
+          <text class="cmp-t" x="1070" y="1992" data-i18n="plan.head2417"></text>
+          <g transform="translate(1138 1983) rotate(-126)">
+            <circle class="cmp-ring" r="36"/>
+            <polygon class="cmp-n" points="0,-36 8,0 -8,0"/>
+            <polygon class="cmp-s" points="0,36 8,0 -8,0"/>
+          </g>
+          <text class="cmp-l" x="1094" y="2024">N</text>
+        </g>
       </svg>
     </figure>
     <figure class="plan" data-plan="3003" data-reveal hidden>
@@ -485,6 +499,15 @@
         <text class="sm" x="505" y="1612" data-i18n="plan.laundry1">Área de</text>
         <text class="sm" x="505" y="1644" data-i18n="plan.laundry2">lavado</text>
         <text class="sm" x="189" y="1946" data-i18n="plan.entrance">Entrada</text>
+        <g class="cmp" aria-hidden="true">
+          <text class="cmp-t" x="1070" y="1992" data-i18n="plan.head3003"></text>
+          <g transform="translate(1138 1983) rotate(-300)">
+            <circle class="cmp-ring" r="36"/>
+            <polygon class="cmp-n" points="0,-36 8,0 -8,0"/>
+            <polygon class="cmp-s" points="0,36 8,0 -8,0"/>
+          </g>
+          <text class="cmp-l" x="1186" y="1964">N</text>
+        </g>
       </svg>
     </figure>
   </div>
@@ -509,14 +532,14 @@
   var dict = {
     es: {
       'page.title':'Plano — The Other Collection',
-      'nav.back':'← Volver a propiedades','plan.back':'← Volver a la propiedad',
+      'nav.back':'← Volver a propiedades','plan.back':'← Volver a la propiedad','plan.head2417':'Orientación 126° SE','plan.head3003':'Orientación 300° NO',
       'plan.sub':'Studio · 42.3 m² · Torre Vitant',
       'plan.label':'Distribución','plan.title':'Plano','plan.alt':'Plano del departamento','plan.windows':'Ventanas de piso a techo','plan.living':'Sala comedor','plan.bedroom':'Recámara','plan.kitchen':'Cocina','plan.closet':'Closet','plan.bath':'Baño','plan.laundry1':'Área de','plan.laundry2':'lavado','plan.entrance':'Entrada',
       'footer.copy':'© 2026 The Other Collection'
     },
     en: {
       'page.title':'Floor plan — The Other Collection',
-      'nav.back':'← Back to properties','plan.back':'← Back to the property',
+      'nav.back':'← Back to properties','plan.back':'← Back to the property','plan.head2417':'Facing 126° SE','plan.head3003':'Facing 300° NW',
       'plan.sub':'Studio · 42.3 m² · Vitant Tower',
       'plan.label':'Layout','plan.title':'Floor plan','plan.alt':'Apartment floor plan','plan.windows':'Floor-to-ceiling windows','plan.living':'Living / Dining','plan.bedroom':'Bedroom','plan.kitchen':'Kitchen','plan.closet':'Closet','plan.bath':'Bathroom','plan.laundry1':'Laundry','plan.laundry2':'area','plan.entrance':'Entrance',
       'footer.copy':'© 2026 The Other Collection'
