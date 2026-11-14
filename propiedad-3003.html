@@ -380,6 +380,29 @@
   /* ---------- floor plan button ---------- */
   .pd-plan{padding-block:clamp(40px,6vw,64px) clamp(8px,2vw,16px);}
   .plan-cta{display:flex;justify-content:center;}
+  /* ---------- location map ---------- */
+  .pd-map{padding-block:clamp(40px,6vw,72px) 0;}
+  .pd-map .section-head{margin-bottom:28px;}
+  .map-wrap{position:relative;height:clamp(320px,52vw,460px);border:1px solid var(--surface-line);border-radius:6px;overflow:hidden;background:var(--surface);}
+  #locMap{position:absolute;inset:0;font-family:var(--font-label);background:var(--surface);}
+  .map-wrap .leaflet-tile-pane{filter:saturate(.7) sepia(.14);}
+  :root[data-theme="dark"] .map-wrap .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) saturate(.5) brightness(.82) contrast(.92) sepia(.18);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .map-wrap .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) saturate(.5) brightness(.82) contrast(.92) sepia(.18);} }
+  .map-pin{display:block;width:22px;height:22px;border-radius:50%;background:var(--accent);border:3px solid var(--bg);box-shadow:0 0 0 1px var(--accent),0 4px 12px rgba(0,0,0,.35);}
+  .map-wrap .leaflet-popup-content-wrapper{background:var(--surface);color:var(--fg);border-radius:4px;box-shadow:0 6px 20px rgba(0,0,0,.25);}
+  .map-wrap .leaflet-popup-tip{background:var(--surface);}
+  .map-wrap .leaflet-popup-content{margin:12px 16px;font-size:12px;letter-spacing:.08em;line-height:1.6;text-transform:uppercase;}
+  .map-wrap .leaflet-popup-content strong{color:var(--accent);font-weight:500;letter-spacing:.16em;}
+  .map-wrap .leaflet-bar a{background:var(--surface);color:var(--fg);border-color:var(--surface-line);}
+  .map-wrap .leaflet-bar a:hover{background:var(--accent-soft);color:var(--fg);}
+  .map-wrap .leaflet-control-attribution{background:color-mix(in srgb,var(--bg) 82%,transparent);color:var(--fg-muted);font-size:10px;}
+  .map-wrap .leaflet-control-attribution a{color:var(--accent);}
+  .map-hint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);z-index:900;display:none;pointer-events:none;
+    font-family:var(--font-label);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg);
+    background:color-mix(in srgb,var(--bg) 88%,transparent);border:1px solid var(--surface-line);border-radius:999px;padding:8px 16px;white-space:nowrap;}
+  .map-wrap.is-touch:not(.map-active) .map-hint{display:block;}
+  .map-addr{text-align:center;margin:22px 0 0;font-size:1.15rem;line-height:1.5;}
+  .map-cta{display:flex;justify-content:center;margin-top:20px;}
   .pd-details{background:var(--surface);border-top:1px solid var(--surface-line);border-bottom:1px solid var(--surface-line);}
   .pd-cols{display:grid;grid-template-columns:1fr;gap:44px;}
   @media(min-width:760px){ .pd-cols{grid-template-columns:1fr 1.3fr;gap:72px;} }
@@ -521,6 +544,21 @@
   </div>
 </section>
 
+<section class="pd-map">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="section-label" data-i18n="loc.label">Ubicación</p>
+      <h2 class="section-title" data-i18n="loc.title">Country Club, Guadalajara</h2>
+    </div>
+    <div class="map-wrap" data-reveal>
+      <div id="locMap" role="region" aria-label="Mapa"></div>
+      <div class="map-hint" data-i18n="loc.hint">Toca para explorar el mapa</div>
+    </div>
+    <p class="map-addr" data-i18n="loc.addr">Av. de las Américas 1254<br>Country Club, Guadalajara</p>
+    <div class="map-cta"><a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=20.6975,-103.37306" target="_blank" rel="noopener" data-i18n="loc.open">Abrir en Google Maps</a></div>
+  </div>
+</section>
+
 <section class="contact">
   <div class="wrap contact-inner" data-reveal>
     <p class="contact-copy" data-i18n="pd.contact">¿Quieres que te avisemos cuando esté disponible? Escríbenos por Instagram y te contactamos.</p>
@@ -571,6 +609,7 @@
       'pd.contact':'¿Quieres que te avisemos cuando esté disponible? Escríbenos por Instagram y te contactamos.',
       'pd.notify':'Avísame',
       'plan.open':'Ver plano',
+      'loc.label':'Ubicación','loc.title':'Country Club, Guadalajara','loc.addr':'Av. de las Américas 1254<br>Country Club, Guadalajara','loc.open':'Abrir en Google Maps','loc.hint':'Toca para explorar el mapa',
       'footer.loc':'Guadalajara, México',
       'footer.copy':'© 2026 The Other Collection',
       'lb.close':'Cerrar','lb.prev':'Anterior','lb.next':'Siguiente'
@@ -588,6 +627,7 @@
       'pd.contact':'Want to know when it’s available? Message us on Instagram and we’ll get in touch.',
       'pd.notify':'Notify me',
       'plan.open':'View floor plan',
+      'loc.label':'Location','loc.title':'Country Club, Guadalajara','loc.addr':'Av. de las Américas 1254<br>Country Club, Guadalajara','loc.open':'Open in Google Maps','loc.hint':'Tap to explore the map',
       'footer.loc':'Guadalajara, Mexico',
       'footer.copy':'© 2026 The Other Collection',
       'lb.close':'Close','lb.prev':'Previous','lb.next':'Next'
@@ -671,6 +711,37 @@
   } else {
     document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('is-visible'); });
   }
+})();
+</script>
+<script>
+/* Mapa interactivo (Leaflet + OpenStreetMap). Se carga solo cuando la sección está cerca de verse. */
+(function(){
+  var el = document.getElementById('locMap'); if(!el) return;
+  var LAT = 20.6975, LNG = -103.37306, wrap = el.parentNode, started = false;
+  function lang(){ return (document.documentElement.getAttribute('lang')||'es').toLowerCase().indexOf('en')===0 ? 'en' : 'es'; }
+  function popupHtml(){ return '<strong>'+(lang()==='en'?'Vitant Tower':'Torre Vitant')+'</strong><br>Av. de las Américas 1254<br>Country Club'; }
+  function init(){
+    var touch = L.Browser.mobile;
+    var map = L.map(el,{center:[LAT,LNG],zoom:16,minZoom:11,maxZoom:19,scrollWheelZoom:false,dragging:!touch});
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}).addTo(map);
+    var icon = L.divIcon({className:'map-pin-wrap',html:'<span class="map-pin"></span>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-14]});
+    var marker = L.marker([LAT,LNG],{icon:icon,title:'Torre Vitant'}).addTo(map).bindPopup(popupHtml,{closeButton:false,offset:[0,-4]});
+    marker.openPopup();
+    if(touch){ wrap.classList.add('is-touch'); }
+    /* La rueda del mouse y el arrastre con un dedo se activan al tocar el mapa, para no atrapar el scroll de la página */
+    map.once('click', function(){ map.scrollWheelZoom.enable(); map.dragging.enable(); wrap.classList.add('map-active'); });
+    new MutationObserver(function(){ var p = marker.getPopup(); if(p && p.isOpen()){ p.update(); } })
+      .observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  }
+  function load(){
+    if(started) return; started = true;
+    var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'assets/vendor/leaflet/leaflet.css'; document.head.appendChild(l);
+    var s = document.createElement('script'); s.src = 'assets/vendor/leaflet/leaflet.js'; s.onload = init; document.head.appendChild(s);
+  }
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){ if(es[0].isIntersecting){ io.disconnect(); load(); } },{rootMargin:'400px'});
+    io.observe(wrap);
+  } else { load(); }
 })();
 </script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "1c9797e74aa94827925dc1aa9a0234e4"}'></script><!-- End Cloudflare Web Analytics -->
